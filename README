@@ -1,1 +1,33 @@
-This will eventually become an ESRI Add-in.  
+This is an ArcMap add-in to help with QC-ing a transit on-board survey.
+
+There are currently two buttons implemented and two more planned.
+
+The two buttons implemented are:
+
+The Definition Query Button, which sets the definition query of the Boarding 
+Locations, Alighting Locations, and Destination Locations layers based on the 
+selected items in the Origin Locations layer.
+
+The Flip OD Button, which flips the origin and destination coordinates for 
+those people that responded that they were coming from a place they were
+actually going to.
+
+
+The two planned buttons are:
+
+A button to fix address geocoding.  There's normally a lot of that, so I'm 
+trying to figure out a way to fix the address geocoding one-by-one as opposed
+to setting all the incorrectly geocoded addresses to 1,1 or 0,0 or -1,-1 and
+batch geocoding all those later. 
+
+The Definition Query Button based on destination location.
+
+
+NOTES FOR USE:
+This requires ArcMap 10.  Other versions may work.  If they don't, well, sorry about your luck.
+
+In some of the scripts, fields are hard-coded.  Check the scripts.
+
+LICENSE: 2012 GPL v3
+
+Tags: ArcMap, ArcView, ESRI, transit
