@@ -15,6 +15,7 @@
     <ArcMap>
       <Commands>
         <Button caption="Set Definition Queries" category="OKI Modeling Tools" class="org.oki.transmodel.arcgisAddIns.defQueryButton" id="bDefQuery" image="Images/busicon.jpg" message="This is the tool that refuses to work." tip="FOR ONCE WILL THIS WORK???"/>
+        <Button caption="Flip Board/Alight" category="OKI Modeling Tools" class="org.oki.transmodel.arcgisAddIns.flipBoardAlight" id="flipBA" image="Images/FlipBA.png" tip="Flip Boardings/Alighting Location"/>
       </Commands>
     </ArcMap>
   </AddIn>
