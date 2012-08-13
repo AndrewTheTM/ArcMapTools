@@ -86,7 +86,7 @@ public class reGeocode extends Button{
 			gp.setOverwriteOutput(true);
 			IScratchWorkspaceFactory scratchWSF=new ScratchWorkspaceFactory();			
 			IWorkspace scratch=scratchWSF.getDefaultScratchWorkspace();
-			
+
 			CreateFeatureclass createFC=new CreateFeatureclass(scratch.getPathName(),"GeocodeLocations");
 			createFC.setGeometryType("point");
 			//Spatial Reference
