@@ -1,9 +1,6 @@
 package org.oki.transmodel.arcgisAddIns;
 
 import java.io.IOException;
-
-import javax.swing.JOptionPane;
-
 import com.esri.arcgis.addins.desktop.Button;
 import com.esri.arcgis.arcmapui.IMxDocument;
 import com.esri.arcgis.carto.FeatureLayer;
@@ -17,7 +14,7 @@ import com.esri.arcgis.geodatabase.ISelectionSet;
 import com.esri.arcgis.geodatabase.ITable;
 import com.esri.arcgis.interop.AutomationException;
 
-public class FixO2BDistances extends Button {
+public class FixDistances extends Button {
 	private IApplication app;
 	@SuppressWarnings("unused")
 	@Override
@@ -52,6 +49,8 @@ public class FixO2BDistances extends Button {
 						
 						IEnumIDs selIds=selSet.getIDs();
 						
+						//TODO: This needs to only recalc if the survey bus is the first (O2B) or last (A2D)
+						
 						int iId=selIds.next();
 						while(iId>0){
 							double originX=0;
@@ -62,10 +61,10 @@ public class FixO2BDistances extends Button {
 							
 							int oGetVal=0;
 							if(row.getValue(oGetField)!=null)
-								oGetVal=(Integer)row.getValue(oGetField);
+								oGetVal=(int)Math.round((Double) row.getValue(oGetField));
 							int dGetVal=0;
 							if(row.getValue(dGetVal)!=null)
-								dGetVal=(Integer)row.getValue(dGetVal);
+								dGetVal=(int)Double.parseDouble((row.getValue(dGetField).toString()));
 							
 							double x1=0,y1=0, x2=0, y2=0;
 							if(row.getValue(boardXField)!=null && row.getValue(originXField)!=null && row.getValue(boardYField)!=null && row.getValue(originYField)!=null){
@@ -75,7 +74,7 @@ public class FixO2BDistances extends Button {
 								y2=(Double)row.getValue(originYField);
 								
 							}
-							double o2b=Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2));
+							double o2b=Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2))/5280;
 							
 							if(row.getValue(alightXField)!=null && row.getValue(alightYField)!=null && row.getValue(destXField)!=null && row.getValue(destYField)!=null){
 								x1=(Double)row.getValue(alightXField);
@@ -83,7 +82,7 @@ public class FixO2BDistances extends Button {
 								y1=(Double)row.getValue(alightYField);
 								y2=(Double)row.getValue(destYField);
 							}
-							double a2d=Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2));
+							double a2d=Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2))/5280;
 							
 							switch(oGetVal){
 							case 1:
@@ -108,15 +107,6 @@ public class FixO2BDistances extends Button {
 								break;
 							}
 							
-							
-							originX=(Double) row.getValue(originXField);
-							originY=(Double) row.getValue(originYField);
-							destX=(Double) row.getValue(destXField);
-							destY=(Double) row.getValue(destYField);
-							row.setValue(destXField, originX);
-							row.setValue(destYField, originY);
-							row.setValue(originXField, destX);
-							row.setValue(originYField, destY);
 							row.store();
 							iId=selIds.next();
 						}

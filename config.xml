@@ -18,6 +18,8 @@
         <Button caption="Flip OD" category="OKI Modeling Tools" class="org.oki.transmodel.arcgisAddIns.flipOriginDestination" id="flipOD" image="Images/FlipBA.png" tip="Flip Origin and Destination Coordinates"/>
         <Button caption="Re-Geocode" category="OKI Modeling Tools" class="org.oki.transmodel.arcgisAddIns.reGeocode" id="bGeocode" image="Images/geocode.jpg"/>
         <Button caption="Tracking Layer" category="OKI Modeling Tools" class="org.oki.transmodel.arcgisAddIns.TestTrackingLayer" id="bTestTracking" image="Images/BigT.png"/>
+        <Button caption="Fix O2B and A2D Distances" category="OKI Modeling Tools" class="org.oki.transmodel.arcgisAddIns.FixDistances" id="fixDistButton" image="Images/Distances.png"/>
+        <Tool caption="New Address" category="OKI Model Tools" class="org.oki.transmodel.arcgisAddIns.NewAddressClick" cursor="Images/arrow.png" id="toolNewAddress" image="Images/NewAddress.png"/>
       </Commands>
     </ArcMap>
   </AddIn>
