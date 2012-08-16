@@ -55,23 +55,19 @@ public class flipBoardingAlighting extends Button {
 							double boardY=0;
 							double alightX=0;
 							double alightY=0;
-							Object oName, oGeocode, oAddress, oCrossStreet1, oCrossStreet2, oCity, oState, oZip, oAVStatus, oAVAddress, oAVZone;
-							Object boardCode, alightCode;
+							Object alightCode;
 							IRow row=table.getRow(iId);
 							boardX=(Double) row.getValue(boardXField);
 							boardY=(Double) row.getValue(boardYField);
-							boardCode=row.getValue(boardCodeField);
 							alightX=(Double) row.getValue(alightXField);
 							alightY=(Double) row.getValue(alightYField);
 							alightCode=row.getValue(alightCodeField);
-							
 							row.setValue(boardCodeField, alightCode);
 							row.setValue(boardXField, alightX);
 							row.setValue(boardYField, alightY);
 							row.setValue(alightCodeField, alightCode);
 							row.setValue(alightXField, boardX);
 							row.setValue(alightYField, boardY);
-							
 							row.store();
 							iId=selIds.next();
 						}

@@ -25,7 +25,7 @@ public class FixDistances extends Button {
 			int selectedCount=focusMap.getSelectionCount();
 			if(selectedCount>0){
 				for(int x=0;x<focusMap.getLayerCount();x++){
-					if(focusMap.getLayer(x).getName().equals("Origin Locations")){
+					if(focusMap.getLayer(x).getName().equals("Origin Locations") || focusMap.getLayer(x).getName().equals("Destination Locations")){
 						FeatureLayer layer=(FeatureLayer) focusMap.getLayer(x);
 						IFeatureSelection featSel=layer;
 						ISelectionSet selSet=featSel.getSelectionSet();
@@ -90,7 +90,7 @@ public class FixDistances extends Button {
 								y2=(Double)row.getValue(destYField);
 							}
 							double a2d=Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2))/5280;
-							if(lastBus.equals(surveyedBus)){
+							if(row.getValue(bus1Field).toString().equals(surveyedBus)){
 								switch(oGetVal){
 								case 1:
 									row.setValue(qcWalkTo, o2b);
@@ -107,7 +107,7 @@ public class FixDistances extends Button {
 								row.setValue(qcBikeTo, 0);
 								row.setValue(qcDriveTo, 0);
 							}
-							if(row.getValue(bus1Field).toString().equals(surveyedBus)){
+							if(lastBus.equals(surveyedBus)){
 								switch(dGetVal){
 								case 1:
 									row.setValue(qcWalkFrom,a2d);

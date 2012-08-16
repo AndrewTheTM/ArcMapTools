@@ -22,7 +22,24 @@
         <Tool caption="New Address" category="OKI Modeling Tools" class="org.oki.transmodel.arcgisAddIns.NewAddressClick" cursor="Images/arrow.png" id="toolNewAddress" image="Images/NewAddress.png"/>
         <Tool caption="Fix Boarding Location" category="OKI Modeling Tools" class="org.oki.transmodel.arcgisAddIns.FixBoardingStop" id="tBrdStopReloc" image="Images/BoardStop.png" tip="Relocate Boarding Stop"/>
         <Button caption="Flip Boarding and Alighting" category="OKI Modeling Tools" class="org.oki.transmodel.arcgisAddIns.flipBoardingAlighting" id="bflipba" image="Images/FlipBA.png" tip="Flip Boarding and Alighting Locations"/>
+        <Button caption="Set Definition Queries Based on Destination" category="OKI Modeling Tools" class="org.oki.transmodel.arcgisAddIns.defQueryButtonDestination" id="bDefQueryDest" image="Images/busiconD.jpg" tip="Set Definition Queries Based on Destination"/>
+        <Tool caption="Fix Alighting Location" category="OKI Modeling Tools" class="org.oki.transmodel.arcgisAddIns.FixAlightingStop" id="tAltStopReloc" image="Images/AlightStop.png" tip="Relocate Alighting Stop"/>
       </Commands>
+      <Toolbars>
+        <Toolbar caption="OKI TOBS QC Toolbar" id="toolbar1">
+          <Items>
+            <Button refID="bDefQuery"/>
+            <Button refID="flipOD"/>
+            <Button refID="bGeocode"/>
+            <Button refID="fixDistButton"/>
+            <Button refID="bflipba"/>
+            <Button refID="bDefQueryDest"/>
+            <Tool refID="toolNewAddress"/>
+            <Tool refID="tBrdStopReloc"/>
+            <Tool refID="tAltStopReloc"/>
+          </Items>
+        </Toolbar>
+      </Toolbars>
     </ArcMap>
   </AddIn>
 </ESRI.Configuration>

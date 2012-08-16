@@ -88,7 +88,7 @@ public class NewAddressClick extends Tool{
 							}
 							
 							for(int y=0;y<focusMap.getLayerCount();y++){
-								if(focusMap.getLayer(y).getName().equals("Origin Locations") || focusMap.getLayer(y).getName().equals("Destination Locations")){
+								if(focusMap.getLayer(y).getName().equals("Origin Locations")){
 									FeatureLayer layer=(FeatureLayer) focusMap.getLayer(y);	
 									IFeatureSelection featSel=layer;
 									ISelectionSet selSet=featSel.getSelectionSet();
@@ -99,6 +99,23 @@ public class NewAddressClick extends Tool{
 											IRow ssRow=selSet.getTarget().getRow(rowId);
 											ssRow.setValue(ssRow.getFields().findField("OXCORD"), newX);
 											ssRow.setValue(ssRow.getFields().findField("OYCORD"), newY);
+											ssRow.store();
+											Map focusMap2=(Map) focusMap;
+											focusMap2.refresh();
+											return;
+										}
+									}
+								}else if(focusMap.getLayer(y).getName().equals("Destination Locations")){
+									FeatureLayer layer=(FeatureLayer) focusMap.getLayer(y);	
+									IFeatureSelection featSel=layer;
+									ISelectionSet selSet=featSel.getSelectionSet();
+									IEnumIDs rowIds=selSet.getIDs();
+									int rowId=rowIds.next();
+									while(rowId>0){
+										if(selSet.getCount()>0){
+											IRow ssRow=selSet.getTarget().getRow(rowId);
+											ssRow.setValue(ssRow.getFields().findField("DXCORD"), newX);
+											ssRow.setValue(ssRow.getFields().findField("DYCORD"), newY);
 											ssRow.store();
 											Map focusMap2=(Map) focusMap;
 											focusMap2.refresh();

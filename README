@@ -2,29 +2,34 @@ This is an ArcMap add-in to help with QC-ing a transit on-board survey.
 
 There are currently two buttons implemented and two more planned.
 
-The two buttons implemented are:
+The buttons implemented are:
 
-The Definition Query Button, which sets the definition query of the Boarding 
-Locations, Alighting Locations, and Destination Locations layers based on the 
-selected items in the Origin Locations layer.
+The Origin Definition Query Button, which sets the definition query of the Boarding 
+Location, Alighting Location, and Destination Location layers based on the 
+selected items in the Origin Location layer.
 
-The Flip OD Button, which flips the origin and destination coordinates for 
-those people that responded that they were coming from a place they were
-actually going to.
+The Destination Definition Query Button, which sets the definition query of the 
+Origin Location, Boarding Location, and Alighting Location layers based on the 
+selected items in the Destination Location Layer.
 
+The Flip OD Button, which flips the origin and destination coordinates.
 
-The two planned buttons are:
+The Flip BA Button, which flips the boarding and alighting coordinates.
 
-A button to fix address geocoding.  There's normally a lot of that, so I'm 
-trying to figure out a way to fix the address geocoding one-by-one as opposed
-to setting all the incorrectly geocoded addresses to 1,1 or 0,0 or -1,-1 and
-batch geocoding all those later. 
+The Re-Geocode Button
 
-The Definition Query Button based on destination location.
+The Fix Distances Button
 
+The Pick-Address Button
+
+The Pick Boarding Stop Button
+
+The Pick Alighting Stop Button
 
 NOTES FOR USE:
-This requires ArcMap 10.  Other versions may work.  If they don't, well, sorry about your luck.
+This requires ArcMap 10.  Other versions may work.  You can get ArcMap from ESRI,
+www.esri.com.  Note that ArcMap is closed-source software, but this extension is
+open source.
 
 In some of the scripts, fields are hard-coded.  Check the scripts.
 

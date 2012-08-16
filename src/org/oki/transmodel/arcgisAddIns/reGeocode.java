@@ -83,6 +83,11 @@ public class reGeocode extends Button{
 					newField.setFieldScale(8);
 					newField.setFieldPrecision(20);
 					gp.execute(newField, null);
+					
+					newField=new AddField(scratch.getPathName()+File.separator+"GeocodeLocations","Address","string");
+					newField.setFieldLength(150);
+					gp.execute(newField, null);
+					
 					Workspace ws=new Workspace(scratch);
 					FeatureClass featClass=new FeatureClass(ws.openFeatureClass("GeocodeLocations"));
 					ITable table=selSet.getTarget();
