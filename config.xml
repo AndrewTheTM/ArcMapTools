@@ -15,11 +15,13 @@
     <ArcMap>
       <Commands>
         <Button caption="Set Definition Queries Based on Origin" category="OKI Modeling Tools" class="org.oki.transmodel.arcgisAddIns.defQueryButtonOrigin" id="bDefQuery" image="Images/busicon.jpg" message="This is the tool that refuses to work." tip="Set Definition Queries based on Origin Location"/>
-        <Button caption="Flip OD" category="OKI Modeling Tools" class="org.oki.transmodel.arcgisAddIns.flipOriginDestination" id="flipOD" image="Images/FlipBA.png" tip="Flip Origin and Destination Coordinates"/>
+        <Button caption="Flip OD" category="OKI Modeling Tools" class="org.oki.transmodel.arcgisAddIns.flipOriginDestination" id="flipOD" image="Images/FlipOD.png" tip="Flip Origin and Destination Coordinates"/>
         <Button caption="Re-Geocode" category="OKI Modeling Tools" class="org.oki.transmodel.arcgisAddIns.reGeocode" id="bGeocode" image="Images/geocode.jpg"/>
         <Button caption="Tracking Layer" category="OKI Modeling Tools" class="org.oki.transmodel.arcgisAddIns.TestTrackingLayer" id="bTestTracking" image="Images/BigT.png"/>
         <Button caption="Fix O2B and A2D Distances" category="OKI Modeling Tools" class="org.oki.transmodel.arcgisAddIns.FixDistances" id="fixDistButton" image="Images/Distances.png"/>
-        <Tool caption="New Address" category="OKI Model Tools" class="org.oki.transmodel.arcgisAddIns.NewAddressClick" cursor="Images/arrow.png" id="toolNewAddress" image="Images/NewAddress.png"/>
+        <Tool caption="New Address" category="OKI Modeling Tools" class="org.oki.transmodel.arcgisAddIns.NewAddressClick" cursor="Images/arrow.png" id="toolNewAddress" image="Images/NewAddress.png"/>
+        <Tool caption="Fix Boarding Location" category="OKI Modeling Tools" class="org.oki.transmodel.arcgisAddIns.FixBoardingStop" id="tBrdStopReloc" image="Images/BoardStop.png" tip="Relocate Boarding Stop"/>
+        <Button caption="Flip Boarding and Alighting" category="OKI Modeling Tools" class="org.oki.transmodel.arcgisAddIns.flipBoardingAlighting" id="bflipba" image="Images/FlipBA.png" tip="Flip Boarding and Alighting Locations"/>
       </Commands>
     </ArcMap>
   </AddIn>

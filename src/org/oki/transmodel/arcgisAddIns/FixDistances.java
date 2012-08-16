@@ -46,11 +46,12 @@ public class FixDistances extends Button {
 						int qcWalkFrom=table.findField("QC_WalkFromDistance");
 						int qcBikeFrom=table.findField("QC_BikeFromDistance");
 						int qcDriveFrom=table.findField("QC_DriveFromDistance");
-						
+						int surveyedBusField=table.findField("RTCODE");
+						int bus1Field=table.findField("BUS1");
+						int bus2Field=table.findField("BUS2");
+						int bus3Field=table.findField("BUS3");
+						int bus4Field=table.findField("BUS4");
 						IEnumIDs selIds=selSet.getIDs();
-						
-						//TODO: This needs to only recalc if the survey bus is the first (O2B) or last (A2D)
-						
 						int iId=selIds.next();
 						while(iId>0){
 							double originX=0;
@@ -58,24 +59,30 @@ public class FixDistances extends Button {
 							double destX=0;
 							double destY=0;
 							IRow row=table.getRow(iId);
-							
+							String surveyedBus=row.getValue(surveyedBusField).toString();
+							String lastBus="";
+							if(row.getValue(bus4Field)!=null)
+								lastBus=row.getValue(bus4Field).toString();
+							else if(row.getValue(bus3Field)!=null)
+								lastBus=row.getValue(bus3Field).toString();
+							else if(row.getValue(bus2Field)!=null)
+								lastBus=row.getValue(bus2Field).toString();
+							else
+								lastBus=row.getValue(bus1Field).toString();
 							int oGetVal=0;
 							if(row.getValue(oGetField)!=null)
 								oGetVal=(int)Math.round((Double) row.getValue(oGetField));
 							int dGetVal=0;
 							if(row.getValue(dGetVal)!=null)
 								dGetVal=(int)Double.parseDouble((row.getValue(dGetField).toString()));
-							
 							double x1=0,y1=0, x2=0, y2=0;
 							if(row.getValue(boardXField)!=null && row.getValue(originXField)!=null && row.getValue(boardYField)!=null && row.getValue(originYField)!=null){
 								x1=(Double)row.getValue(boardXField);
 								x2=(Double)row.getValue(originXField);
 								y1=(Double)row.getValue(boardYField);
 								y2=(Double)row.getValue(originYField);
-								
 							}
 							double o2b=Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2))/5280;
-							
 							if(row.getValue(alightXField)!=null && row.getValue(alightYField)!=null && row.getValue(destXField)!=null && row.getValue(destYField)!=null){
 								x1=(Double)row.getValue(alightXField);
 								x2=(Double)row.getValue(destXField);
@@ -83,30 +90,40 @@ public class FixDistances extends Button {
 								y2=(Double)row.getValue(destYField);
 							}
 							double a2d=Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2))/5280;
-							
-							switch(oGetVal){
-							case 1:
-								row.setValue(qcWalkTo, o2b);
-								break;
-							case 2:
-								row.setValue(qcBikeTo, o2b);
-								break;
-							default:
-								row.setValue(qcDriveTo, o2b);
-								break;
+							if(lastBus.equals(surveyedBus)){
+								switch(oGetVal){
+								case 1:
+									row.setValue(qcWalkTo, o2b);
+									break;
+								case 2:
+									row.setValue(qcBikeTo, o2b);
+									break;
+								default:
+									row.setValue(qcDriveTo, o2b);
+									break;
+								}
+							}else{
+								row.setValue(qcWalkTo, 0);
+								row.setValue(qcBikeTo, 0);
+								row.setValue(qcDriveTo, 0);
 							}
-							switch(dGetVal){
-							case 1:
-								row.setValue(qcWalkFrom,a2d);
-								break;
-							case 2:
-								row.setValue(qcBikeFrom, a2d);
-								break;
-							default:
-								row.setValue(qcDriveFrom, a2d);
-								break;
+							if(row.getValue(bus1Field).toString().equals(surveyedBus)){
+								switch(dGetVal){
+								case 1:
+									row.setValue(qcWalkFrom,a2d);
+									break;
+								case 2:
+									row.setValue(qcBikeFrom, a2d);
+									break;
+								default:
+									row.setValue(qcDriveFrom, a2d);
+									break;
+								}
+							}else{
+								row.setValue(qcWalkFrom, 0);
+								row.setValue(qcBikeFrom, 0);
+								row.setValue(qcDriveFrom, 0);
 							}
-							
 							row.store();
 							iId=selIds.next();
 						}

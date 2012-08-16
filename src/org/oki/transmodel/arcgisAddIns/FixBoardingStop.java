@@ -19,12 +19,12 @@ import com.esri.arcgis.geodatabase.IEnumIDs;
 import com.esri.arcgis.geodatabase.IRow;
 import com.esri.arcgis.geodatabase.ISelectionSet;
 import com.esri.arcgis.geometry.Envelope;
+import com.esri.arcgis.geometry.IEnvelope;
 import com.esri.arcgis.geometry.IPoint;
 import com.esri.arcgis.geometry.Point;
 import com.esri.arcgis.system.IArray;
-import com.esri.arcgis.geometry.IEnvelope;
 
-public class NewAddressClick extends Tool{
+public class FixBoardingStop extends Tool{
 	IScreenDisplay screenDisplay;
 	IApplication app;
 	IMxDocument mxDoc;
@@ -50,7 +50,7 @@ public class NewAddressClick extends Tool{
 			this.screenDisplay=activeView.getScreenDisplay();
 
 			for(int x=0;x<focusMap.getLayerCount();x++){
-				if(focusMap.getLayer(x).getName().equals("GeocodeLocations")){
+				if(focusMap.getLayer(x).getName().equals("Stops")){
 					FeatureLayer featLayer=(FeatureLayer) focusMap.getLayer(x);
 					IIdentify ident=featLayer;
 					IEnvelope envelope = new Envelope();
@@ -61,44 +61,32 @@ public class NewAddressClick extends Tool{
 					envelope.setLowerLeft(envLL);
 					envelope.setUpperRight(envUR);
 					IArray result=ident.identify(envelope);
-					double newX=0, newY=0;
+					double brdCode=0, newX=0, newY=0;
 					if(result!=null){
 						for(int i=0;i<result.getCount();i++){
 							Object obj=result.getElement(i);
 							@SuppressWarnings("deprecation")
 							SimpleIdentifyObject sio = new SimpleIdentifyObject(obj);
 							IRow idRow=sio.getRow();
-							sio.flash(screenDisplay);
-							if(result.getCount()==1){
-								Object selectedValue=JOptionPane.showConfirmDialog(null, "This will update the XY coordinates of the selected selected origin or destination.  Is this okay?", "Question", JOptionPane.OK_CANCEL_OPTION);
-								if(selectedValue.equals(JOptionPane.CANCEL_OPTION))
-									return;
-								else{
-									newX=(Double)idRow.getValue(idRow.getFields().findField("X"));
-									newY=(Double)idRow.getValue(idRow.getFields().findField("Y"));
-								}
-							}else{
-								int remaining=result.getCount()-i-1;
-								Object selectedValue=JOptionPane.showConfirmDialog(null, "This will update the XY coordinates of the selected selected origin or destination.  Do you want this one?  There are "+remaining+" choices remaining.", "Question", JOptionPane.OK_CANCEL_OPTION);
-								if(selectedValue.equals(JOptionPane.OK_OPTION)){
-									newX=(Double)idRow.getValue(idRow.getFields().findField("X"));
-									newY=(Double)idRow.getValue(idRow.getFields().findField("Y"));
-									i=result.getCount(); //this kills this loop - break was breaking too far!
-								}
-							}
-							
-							for(int y=0;y<focusMap.getLayerCount();y++){
-								if(focusMap.getLayer(y).getName().equals("Origin Locations") || focusMap.getLayer(y).getName().equals("Destination Locations")){
-									FeatureLayer layer=(FeatureLayer) focusMap.getLayer(y);	
-									IFeatureSelection featSel=layer;
-									ISelectionSet selSet=featSel.getSelectionSet();
-									IEnumIDs rowIds=selSet.getIDs();
-									int rowId=rowIds.next();
-									while(rowId>0){
-										if(selSet.getCount()>0){
+							String routeName=(String) idRow.getValue(idRow.getFields().findField("BusNum"));
+							Object selectedValue=JOptionPane.showConfirmDialog(null, "This will update the XY coordinates of the selected selected boarding stop for Route "+routeName+".  This stop.  Is this okay?", "Question", JOptionPane.YES_NO_OPTION);
+							if(selectedValue.equals(JOptionPane.YES_OPTION)){
+								newX=(Double)idRow.getValue(idRow.getFields().findField("StopLon"));
+								newY=(Double)idRow.getValue(idRow.getFields().findField("StopLat"));
+								brdCode=(Double)idRow.getValue(idRow.getFields().findField("StopID"));
+								for(int y=0;y<focusMap.getLayerCount();y++){
+									if(focusMap.getLayer(y).getName().equals("Origin Locations") || focusMap.getLayer(y).getName().equals("Destination Locations")){
+										FeatureLayer layer=(FeatureLayer) focusMap.getLayer(y);	
+										IFeatureSelection featSel=layer;
+										ISelectionSet selSet=featSel.getSelectionSet();
+										IEnumIDs ssIds=	selSet.getIDs();
+										int rowId=0;
+										rowId=ssIds.next();
+										while(rowId>0){
 											IRow ssRow=selSet.getTarget().getRow(rowId);
-											ssRow.setValue(ssRow.getFields().findField("OXCORD"), newX);
-											ssRow.setValue(ssRow.getFields().findField("OYCORD"), newY);
+											ssRow.setValue(ssRow.getFields().findField("BRDCODE"), brdCode);
+											ssRow.setValue(ssRow.getFields().findField("BX"), newX);
+											ssRow.setValue(ssRow.getFields().findField("BY_"), newY);
 											ssRow.store();
 											Map focusMap2=(Map) focusMap;
 											focusMap2.refresh();
@@ -112,13 +100,13 @@ public class NewAddressClick extends Tool{
 				}
 			}
 		}
-		catch (Exception e){
+		catch(Exception e){
 			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 	}
 	
 	public void init(IApplication app){
 		this.app=app;
 	}
-	
 }
