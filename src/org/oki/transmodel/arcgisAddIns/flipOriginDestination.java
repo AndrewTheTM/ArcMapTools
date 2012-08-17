@@ -27,8 +27,8 @@ public class flipOriginDestination extends Button {
 			int selectedCount=focusMap.getSelectionCount();
 			if(selectedCount>0){
 				for(int x=0;x<focusMap.getLayerCount();x++){
-					if(focusMap.getLayer(x).getName().equals("Origin Locations")){
-						FeatureLayer layer=(FeatureLayer) focusMap.getLayer(x);
+					FeatureLayer layer=(FeatureLayer) focusMap.getLayer(x);
+					if((focusMap.getLayer(x).getName().equals("Origin Locations") && layer.getSelectionSet().getCount()==1) || (focusMap.getLayer(x).getName().equals("Destination Locations") && layer.getSelectionSet().getCount()==1)){
 						IFeatureSelection featSel=layer;
 						ISelectionSet selSet=featSel.getSelectionSet();
 						ITable table=selSet.getTarget();

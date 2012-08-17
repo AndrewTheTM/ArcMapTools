@@ -150,20 +150,22 @@ public class reGeocode extends Button{
 						currentElement.getAllProperties(names, values);
 						Object[] nameArray=(Object[]) names[0];
 						Object[] valueArray=(Object[]) values[0];
+						Feature newFeature=(Feature) featClass.createFeature();
 						for(int cec=0;cec<currentElement.getCount();cec++){
 							if(nameArray[cec].toString().equals("Shape")){
 								IGeometry geomPoint=new IGeometryProxy(valueArray[cec]);
 								IPoint point=new Point(geomPoint);
-								
 								System.out.println("X: "+point.getX()+" Y: "+point.getY());
-								
-								Feature newFeature=(Feature) featClass.createFeature();
 								newFeature.setShapeByRef(point);
 								newFeature.setValue(2, point.getX());
 								newFeature.setValue(3, point.getY());
-								newFeature.store();
+								
+							} else if(nameArray[cec].toString().equals("Match_addr")){
+								newFeature.setValue(4, valueArray[cec].toString());
+								System.out.println(valueArray[cec].toString());
 							}
 						}
+						newFeature.store();
 					}
 					break; // This breaks where there should be no more features remaining to check
 				}
