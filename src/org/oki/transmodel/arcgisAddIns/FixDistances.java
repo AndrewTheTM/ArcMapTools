@@ -14,6 +14,10 @@ import com.esri.arcgis.geodatabase.ISelectionSet;
 import com.esri.arcgis.geodatabase.ITable;
 import com.esri.arcgis.interop.AutomationException;
 
+/**
+ * @author arohne
+ * This class updates the QC fields (look for it in the comments)
+ */
 public class FixDistances extends Button {
 	private IApplication app;
 	@SuppressWarnings("unused")
@@ -25,27 +29,38 @@ public class FixDistances extends Button {
 			int selectedCount=focusMap.getSelectionCount();
 			if(selectedCount>0){
 				for(int x=0;x<focusMap.getLayerCount();x++){
+					//Field names below, Origin Locations, then Destination Locations
 					if(focusMap.getLayer(x).getName().equals("Origin Locations") || focusMap.getLayer(x).getName().equals("Destination Locations")){
 						FeatureLayer layer=(FeatureLayer) focusMap.getLayer(x);
 						IFeatureSelection featSel=layer;
 						ISelectionSet selSet=featSel.getSelectionSet();
 						ITable table=selSet.getTarget();
+						/* 
+						 * These are the field names that it is looking at and for
+						 */
+						//Origin Coordinates
 						int originXField=table.findField("OXCORD");
 						int originYField=table.findField("OYCORD");
+						//Destination Coordinates
 						int destXField=table.findField("DXCORD");
 						int destYField=table.findField("DYCORD");
+						//Boarding Location Coordinates
 						int boardXField=table.findField("BX");
 						int boardYField=table.findField("BY_");
+						//Alighting Location Coordinates
 						int alightXField=table.findField("AX");
 						int alightYField=table.findField("AY");
+						//Access Types
 						int oGetField=table.findField("OGET");
 						int dGetField=table.findField("DGET");
+						//QC Fields
 						int qcWalkTo=table.findField("QC_WalkToDistance");
 						int qcBikeTo=table.findField("QC_BikeToDistance");
 						int qcDriveTo=table.findField("QC_DriveToDistance");
 						int qcWalkFrom=table.findField("QC_WalkFromDistance");
 						int qcBikeFrom=table.findField("QC_BikeFromDistance");
 						int qcDriveFrom=table.findField("QC_DriveFromDistance");
+						//Route Names (RTCODE) and busses used (BUS1, etc)
 						int surveyedBusField=table.findField("RTCODE");
 						int bus1Field=table.findField("BUS1");
 						int bus2Field=table.findField("BUS2");
@@ -92,13 +107,13 @@ public class FixDistances extends Button {
 							double a2d=Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2))/5280;
 							if(row.getValue(bus1Field).toString().equals(surveyedBus)){
 								switch(oGetVal){
-								case 1:
+								case 1: //Walk
 									row.setValue(qcWalkTo, o2b);
 									break;
-								case 2:
+								case 2: //Bike
 									row.setValue(qcBikeTo, o2b);
 									break;
-								default:
+								default: //Auto Modes (all other)
 									row.setValue(qcDriveTo, o2b);
 									break;
 								}
@@ -109,13 +124,13 @@ public class FixDistances extends Button {
 							}
 							if(lastBus.equals(surveyedBus)){
 								switch(dGetVal){
-								case 1:
+								case 1: //Walk
 									row.setValue(qcWalkFrom,a2d);
 									break;
-								case 2:
+								case 2: //Bike
 									row.setValue(qcBikeFrom, a2d);
 									break;
-								default:
+								default: //Auto Modes (all other)
 									row.setValue(qcDriveFrom, a2d);
 									break;
 								}

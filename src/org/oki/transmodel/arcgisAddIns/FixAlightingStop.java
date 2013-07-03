@@ -42,6 +42,11 @@ public class FixAlightingStop extends Tool{
 		return true;
 	}
 	
+	/*
+	 * @author arohne
+	 * @see com.esri.arcgis.addins.desktop.Tool#mousePressed(java.awt.event.MouseEvent)
+	 * Class that handles when the mouse was pressed to fix the alighting stop
+	 */
 	public void mousePressed(MouseEvent me){
 		try{
 			mxDoc=new com.esri.arcgis.arcmapui.IMxDocumentProxy (app.getDocument());
@@ -50,6 +55,7 @@ public class FixAlightingStop extends Tool{
 			this.screenDisplay=activeView.getScreenDisplay();
 
 			for(int x=0;x<focusMap.getLayerCount();x++){
+				//Layer name for bus stop locations below
 				if(focusMap.getLayer(x).getName().equals("Stops")){
 					FeatureLayer featLayer=(FeatureLayer) focusMap.getLayer(x);
 					IIdentify ident=featLayer;
@@ -68,9 +74,11 @@ public class FixAlightingStop extends Tool{
 							@SuppressWarnings("deprecation")
 							SimpleIdentifyObject sio = new SimpleIdentifyObject(obj);
 							IRow idRow=sio.getRow();
+							//Field name for bus route id below from the bus stop layer
 							String routeName=(String) idRow.getValue(idRow.getFields().findField("BusNum"));
 							Object selectedValue=JOptionPane.showConfirmDialog(null, "This will update the XY coordinates of the selected selected boarding stop for Route "+routeName+".  This stop.  Is this okay?", "Question", JOptionPane.YES_NO_OPTION);
 							if(selectedValue.equals(JOptionPane.YES_OPTION)){
+								//Field names for longitude and latitude and stop id below FROM the bus stops layer
 								newX=(Double)idRow.getValue(idRow.getFields().findField("StopLon"));
 								newY=(Double)idRow.getValue(idRow.getFields().findField("StopLat"));
 								brdCode=(Double)idRow.getValue(idRow.getFields().findField("StopID"));

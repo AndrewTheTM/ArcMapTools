@@ -17,6 +17,11 @@ import com.esri.arcgis.geodatabase.ISelectionSet;
 import com.esri.arcgis.geodatabase.ITable;
 import com.esri.arcgis.interop.AutomationException;
 
+/**
+ * @author arohne
+ * This class sets the definition queries on the Origin, Alighting, and Boarding locations based on the selected
+ * record in the Destination locations layer.
+ */
 public class defQueryButtonDestination extends Button {
 	private IApplication app;
 	@Override
@@ -28,11 +33,13 @@ public class defQueryButtonDestination extends Button {
 			String sqlString="";
 			if(selectedCount>0){
 				for(int x=0;x<focusMap.getLayerCount();x++){
+					//Destination Location Layer name below
 					if(focusMap.getLayer(x).getName().equals("Destination Locations")){
 						FeatureLayer layer=(FeatureLayer) focusMap.getLayer(x);
 						IFeatureSelection featSel=layer;
 						ISelectionSet selSet=featSel.getSelectionSet();
 						ITable table=selSet.getTarget();
+						//Field name for Sample ID field below
 						int snFieldN=table.findField("SAMPN");
 						IEnumIDs selIds=selSet.getIDs();
 						int iId=selIds.next();
@@ -45,12 +52,14 @@ public class defQueryButtonDestination extends Button {
 							iId=selIds.next();
 						}
 						for(int b=0;b<iaId.length;b++){
+							//Field name for Sample ID field below
 							sqlString+="\"SAMPN\"="+iaId[b];
 						}
 					}
 				}
 			}
 			for(int x=0;x<focusMap.getLayerCount();x++){
+				//Layer names for Origin Locations, Alighting Locations, and Boarding Locations below
 				if(focusMap.getLayer(x).getName().equals("Origin Locations") || 
 						focusMap.getLayer(x).getName().equals("Alighting Locations") || 
 						focusMap.getLayer(x).getName().equals("Boarding Locations")){

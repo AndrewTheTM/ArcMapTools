@@ -42,6 +42,7 @@ public class FixBoardingStop extends Tool{
 		return true;
 	}
 	
+	//TODO: Document
 	public void mousePressed(MouseEvent me){
 		try{
 			mxDoc=new com.esri.arcgis.arcmapui.IMxDocumentProxy (app.getDocument());
