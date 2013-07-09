@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ESRI.Configuration xmlns="http://schemas.esri.com/Desktop/AddIns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <Name>Set Definition Queries</Name>
+  <Name>OKI TOBS ArcMap Tools</Name>
   <AddInID>a5cca635-0138-1000-5000-0a0000970000</AddInID>
   <Description></Description>
   <Version>1.1</Version>

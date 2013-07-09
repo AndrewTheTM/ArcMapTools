@@ -46,7 +46,7 @@ public class defQueryButtonOrigin extends Button {
 						int a=0;
 						while(iId>0){
 							IRow row=table.getRow(iId);
-							iaId[a]=((Number)row.getValue(snFieldN)).intValue(); //<~~ java.lang.Double cannot be cast to java.lang.Integer
+							iaId[a]=((Number)row.getValue(snFieldN)).intValue();
 							a++;
 							iId=selIds.next();
 						}

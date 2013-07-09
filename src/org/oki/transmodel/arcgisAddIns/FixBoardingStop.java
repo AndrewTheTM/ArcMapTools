@@ -42,7 +42,11 @@ public class FixBoardingStop extends Tool{
 		return true;
 	}
 	
-	//TODO: Document
+	/*
+	 * Class to handle the mouse click event when the Fix Boarding Stop tool is activated.
+	 * @author arohne
+	 * @see com.esri.arcgis.addins.desktop.Tool#mousePressed(java.awt.event.MouseEvent)
+	 */
 	public void mousePressed(MouseEvent me){
 		try{
 			mxDoc=new com.esri.arcgis.arcmapui.IMxDocumentProxy (app.getDocument());
@@ -51,6 +55,7 @@ public class FixBoardingStop extends Tool{
 			this.screenDisplay=activeView.getScreenDisplay();
 
 			for(int x=0;x<focusMap.getLayerCount();x++){
+				//Below is the layer for the transit stops
 				if(focusMap.getLayer(x).getName().equals("Stops")){
 					FeatureLayer featLayer=(FeatureLayer) focusMap.getLayer(x);
 					IIdentify ident=featLayer;
@@ -69,13 +74,16 @@ public class FixBoardingStop extends Tool{
 							@SuppressWarnings("deprecation")
 							SimpleIdentifyObject sio = new SimpleIdentifyObject(obj);
 							IRow idRow=sio.getRow();
+							//Below is the field name for the bus number in the bus stops layer
 							String routeName=(String) idRow.getValue(idRow.getFields().findField("BusNum"));
 							Object selectedValue=JOptionPane.showConfirmDialog(null, "This will update the XY coordinates of the selected selected boarding stop for Route "+routeName+".  This stop.  Is this okay?", "Question", JOptionPane.YES_NO_OPTION);
 							if(selectedValue.equals(JOptionPane.YES_OPTION)){
+								//below are the fields for the stop longitude, latitude, and stop id from the bus stop layer
 								newX=(Double)idRow.getValue(idRow.getFields().findField("StopLon"));
 								newY=(Double)idRow.getValue(idRow.getFields().findField("StopLat"));
 								brdCode=(Double)idRow.getValue(idRow.getFields().findField("StopID"));
 								for(int y=0;y<focusMap.getLayerCount();y++){
+									//Below are the layer names for the origin locations and the destination locations
 									if(focusMap.getLayer(y).getName().equals("Origin Locations") || focusMap.getLayer(y).getName().equals("Destination Locations")){
 										FeatureLayer layer=(FeatureLayer) focusMap.getLayer(y);	
 										IFeatureSelection featSel=layer;
@@ -85,6 +93,7 @@ public class FixBoardingStop extends Tool{
 										rowId=ssIds.next();
 										while(rowId>0){
 											IRow ssRow=selSet.getTarget().getRow(rowId);
+											//The below are the boarding id location fields, boarding X location, and boarding Y location
 											ssRow.setValue(ssRow.getFields().findField("BRDCODE"), brdCode);
 											ssRow.setValue(ssRow.getFields().findField("BX"), newX);
 											ssRow.setValue(ssRow.getFields().findField("BY_"), newY);

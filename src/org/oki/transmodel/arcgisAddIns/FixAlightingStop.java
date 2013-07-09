@@ -83,6 +83,7 @@ public class FixAlightingStop extends Tool{
 								newY=(Double)idRow.getValue(idRow.getFields().findField("StopLat"));
 								brdCode=(Double)idRow.getValue(idRow.getFields().findField("StopID"));
 								for(int y=0;y<focusMap.getLayerCount();y++){
+									//Below is the layer names for the origin and destination locations
 									if(focusMap.getLayer(y).getName().equals("Origin Locations") || focusMap.getLayer(y).getName().equals("Destination Locations")){
 										FeatureLayer layer=(FeatureLayer) focusMap.getLayer(y);	
 										IFeatureSelection featSel=layer;
@@ -92,6 +93,7 @@ public class FixAlightingStop extends Tool{
 										rowId=ssIds.next();
 										while(rowId>0){
 											IRow ssRow=selSet.getTarget().getRow(rowId);
+											//Below are the field names for the alighting stop ID, X location, and Y location.
 											ssRow.setValue(ssRow.getFields().findField("ALTCODE"), brdCode);
 											ssRow.setValue(ssRow.getFields().findField("AX"), newX);
 											ssRow.setValue(ssRow.getFields().findField("AY"), newY);
