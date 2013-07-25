@@ -14,7 +14,7 @@
   <AddIn language="JAVA" library="definequerybutton.esriaddin">
     <ArcMap>
       <Commands>
-        <Button caption="Set Definition Queries Based on Origin" category="OKI Modeling Tools" class="org.oki.transmodel.arcgisAddIns.defQueryButtonOrigin" id="bDefQuery" image="Images/busicon.jpg" message="This is the tool that refuses to work." tip="Set Definition Queries based on Origin Location"/>
+        <Button caption="Set Definition Queries Based on Origin" category="OKI Modeling Tools" class="org.oki.transmodel.arcgisAddIns.defQueryButtonOrigin" id="bDefQuery" image="Images/busicon.jpg" message="" tip="Set Definition Queries based on Origin Location"/>
         <Button caption="Flip OD" category="OKI Modeling Tools" class="org.oki.transmodel.arcgisAddIns.flipOriginDestination" id="flipOD" image="Images/FlipOD.png" tip="Flip Origin and Destination Coordinates"/>
         <Button caption="Re-Geocode" category="OKI Modeling Tools" class="org.oki.transmodel.arcgisAddIns.reGeocode" id="bGeocode" image="Images/geocode.jpg"/>
         <Button caption="Tracking Layer" category="OKI Modeling Tools" class="org.oki.transmodel.arcgisAddIns.TestTrackingLayer" id="bTestTracking" image="Images/BigT.png"/>
