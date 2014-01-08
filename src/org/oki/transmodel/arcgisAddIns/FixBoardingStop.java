@@ -76,7 +76,7 @@ public class FixBoardingStop extends Tool{
 							IRow idRow=sio.getRow();
 							//Below is the field name for the bus number in the bus stops layer
 							String routeName=(String) idRow.getValue(idRow.getFields().findField("BusNum"));
-							Object selectedValue=JOptionPane.showConfirmDialog(null, "This will update the XY coordinates of the selected selected boarding stop for Route "+routeName+".  This stop.  Is this okay?", "Question", JOptionPane.YES_NO_OPTION);
+							Object selectedValue=JOptionPane.showConfirmDialog(null, "This will update the XY coordinates of the selected boarding stop for Route "+routeName+".  This stop.  Is this okay?", "Question", JOptionPane.YES_NO_OPTION);
 							if(selectedValue.equals(JOptionPane.YES_OPTION)){
 								//below are the fields for the stop longitude, latitude, and stop id from the bus stop layer
 								newX=(Double)idRow.getValue(idRow.getFields().findField("StopLon"));

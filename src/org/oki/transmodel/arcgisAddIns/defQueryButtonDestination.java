@@ -39,6 +39,13 @@ public class defQueryButtonDestination extends Button {
 						IFeatureSelection featSel=layer;
 						ISelectionSet selSet=featSel.getSelectionSet();
 						ITable table=selSet.getTarget();
+						/*
+						 * TODO:
+						 * See defQueryButtonOrigin - there's a few changes I made there to handle
+						 * different ID fields and deal with different types of geodatabases.  That
+						 * code needs to make it over here, and when the task (ID field) is completed
+						 * over there, that code needs to make it over here.
+						 */
 						//Field name for Sample ID field below
 						int snFieldN=table.findField("SAMPN");
 						IEnumIDs selIds=selSet.getIDs();

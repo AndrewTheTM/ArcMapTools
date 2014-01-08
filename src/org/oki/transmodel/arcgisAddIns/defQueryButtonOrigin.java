@@ -14,6 +14,7 @@ import com.esri.arcgis.geodatabase.IEnumIDs;
 import com.esri.arcgis.geodatabase.IRow;
 import com.esri.arcgis.geodatabase.ISelectionSet;
 import com.esri.arcgis.geodatabase.ITable;
+import com.esri.arcgis.geodatabase.IWorkspace;
 import com.esri.arcgis.interop.AutomationException;
 
 /**
@@ -38,11 +39,29 @@ public class defQueryButtonOrigin extends Button {
 						IFeatureSelection featSel=layer;
 						ISelectionSet selSet=featSel.getSelectionSet();
 						ITable table=selSet.getTarget();
+						
+						IWorkspace ws = layer.getWorkspace();
+						boolean isAccess=false;
+						if(ws.getPathName().toLowerCase().indexOf(".mdb")>0)
+							isAccess=true;
+						
 						//Field Name for Sample ID field below
+						/*
+						 * TODO:
+						 * Right now I have this set for SAMPN and fail to HHPerTrpID (these are not case sensitive).
+						 * This really should be improved.  Perhaps there's a method to ask once and then store the 
+						 * field name in the MXD file?  
+						 */
+						String idFieldName="";
 						int snFieldN=table.findField("SAMPN");
+						idFieldName="SAMPN";
+						if(snFieldN<0){
+							snFieldN=table.findField("TripID"); //KLUDGE
+							idFieldName="TripID";
+						}
 						IEnumIDs selIds=selSet.getIDs();
 						int iId=selIds.next();
-						int iaId[]=new int[selSet.getCount()];
+						long[] iaId=new long[selSet.getCount()];
 						int a=0;
 						while(iId>0){
 							IRow row=table.getRow(iId);
@@ -51,8 +70,10 @@ public class defQueryButtonOrigin extends Button {
 							iId=selIds.next();
 						}
 						for(int b=0;b<iaId.length;b++){
-							//Field Name for Sample ID field below
-							sqlString+="\"SAMPN\"="+iaId[b];
+							if(!isAccess)
+								sqlString+="\""+idFieldName+"\"="+iaId[b];
+							else
+								sqlString+="["+idFieldName+"]="+iaId[b];
 						}
 					}
 				}

@@ -76,7 +76,7 @@ public class FixAlightingStop extends Tool{
 							IRow idRow=sio.getRow();
 							//Field name for bus route id below from the bus stop layer
 							String routeName=(String) idRow.getValue(idRow.getFields().findField("BusNum"));
-							Object selectedValue=JOptionPane.showConfirmDialog(null, "This will update the XY coordinates of the selected selected boarding stop for Route "+routeName+".  This stop.  Is this okay?", "Question", JOptionPane.YES_NO_OPTION);
+							Object selectedValue=JOptionPane.showConfirmDialog(null, "This will update the XY coordinates of the selected alighting stop for Route "+routeName+".  This stop.  Is this okay?", "Question", JOptionPane.YES_NO_OPTION);
 							if(selectedValue.equals(JOptionPane.YES_OPTION)){
 								//Field names for longitude and latitude and stop id below FROM the bus stops layer
 								newX=(Double)idRow.getValue(idRow.getFields().findField("StopLon"));
